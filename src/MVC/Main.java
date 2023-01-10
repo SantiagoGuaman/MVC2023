@@ -1,8 +1,6 @@
 package MVC;
 
-import Controlador.ControlPersona;
 import Controlador.ControladorMenuPrincipal;
-import Modelo.ModeloPersona;
 import Vista.VistaPrincipal;
 
 public class Main {
