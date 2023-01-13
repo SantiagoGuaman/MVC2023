@@ -167,7 +167,7 @@ public class ControlPersona {
             view.getTxttelefono().setText(null);
             view.getBtngrpsexo().clearSelection();
             view.getSpnsueldo().setValue(0);
-            view.getSpnsueldo().setValue(0);
+            view.getSpncupo().setValue(0);
         } else {
             if (ce == 2) {
                 title = "EDITAR PERSONA";
