@@ -89,7 +89,6 @@ public class ControlPersona {
         }
     }
     
-    
     public void DateEvent(java.awt.event.KeyEvent e) {
         char key = e.getKeyChar();
         if (Character.isDigit(key) || Character.isLetter(key)) {
@@ -310,9 +309,4 @@ public class ControlPersona {
         }
         CargaPersonas();
     }
-
-    private boolean campoVacio(String id) {
-        return id.isEmpty();
-    }
-    
 }
