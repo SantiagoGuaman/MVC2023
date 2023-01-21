@@ -55,26 +55,6 @@ public class ModeloPersona extends Persona{
         return ex;
     }
     
-//    public SQLException GrabaPersonaDB() {
-//        String sql = "INSERT INTO persona (idpersona, nombres, apellidos) VALUES "
-//                + "('" + getIdpersona() + "','" + getNombres() + "','" + getApellidos() + getFechanac() + "" + "')"; //REVISAR EL INSERT 
-//        
-//        ConectPG con = new ConectPG();
-//        SQLException ex = con.Accion(sql);
-//        return ex;
-//    }
-//    
-//    public SQLException BuscarPersonaDB() {
-//        String sql = "SELECT idpersona, nombres, apellidos, fechanacimiento, telefono, sexo, "
-//                + "sueldo, cupo FROM persona WHERE idpersona LIKE '" + getIdpersona() + "' OR nombres LIKE '" + getNombres()+ "'"
-//                + "OR apellidos LIKE '"+ getApellidos()+"' OR "
-//                + "telefono LIKE'"+ getTelefono()+"' OR sexo LIKE '"+ getSexo() + "'";
-//        
-//        ConectPG con = new ConectPG();
-//        SQLException ex = con.Accion(sql);
-//        return ex;
-//    }
-    
     public List<Persona> BuscarPersonaBD(String search) {
             List<Persona> lista = new ArrayList<>();
             String sql = "SELECT idpersona, nombres, apellidos, fechanacimiento, telefono, sexo, "
