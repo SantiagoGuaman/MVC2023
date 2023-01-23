@@ -9,6 +9,7 @@ import com.toedter.calendar.JDateChooser;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
@@ -194,6 +195,14 @@ public class VistaPersonas extends javax.swing.JInternalFrame {
 
     public void setDlgcrud(JDialog dlgcrud) {
         this.dlgcrud = dlgcrud;
+    }
+
+    public JLabel getLblfoto() {
+        return lblfoto;
+    }
+
+    public void setLblfoto(JLabel lblfoto) {
+        this.lblfoto = lblfoto;
     }
     
     
