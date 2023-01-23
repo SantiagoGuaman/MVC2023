@@ -2,13 +2,21 @@ package Controlador;
 
 import Modelo.*;
 import Vista.*;
+import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,7 +24,8 @@ public class ControlPersona {
 
     private final ModeloPersona modelo;
     private final VistaPersonas view;
-
+    private JFileChooser jfc;
+    
     public ControlPersona(ModeloPersona modelo, VistaPersonas view) {
         this.modelo = modelo;
         this.view = view;
@@ -32,7 +41,7 @@ public class ControlPersona {
         view.getBtnEliminar().addActionListener(l -> abrirDialogo(3));
         view.getBtnaceptar().addActionListener(l -> crearEditarEliminarPersona());
         view.getBtncancelar().addActionListener(l -> view.getDlgcrud().dispose());
-        
+        view.getBtncargarimagen().addActionListener(l -> examinaFoto());
         view.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -308,5 +317,25 @@ public class ControlPersona {
             }
         }
         CargaPersonas();
+    }
+    
+        private void examinaFoto(){
+        jfc = new JFileChooser();
+        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int estado = jfc.showOpenDialog(view);
+        if(estado == JFileChooser.APPROVE_OPTION){
+            try {
+                Image imagen=ImageIO.read(jfc.getSelectedFile()).getScaledInstance(
+                        view.getLblfoto().getWidth(),
+                        view.getLblfoto().getHeight(),
+                        Image.SCALE_DEFAULT);
+                
+                Icon icono=new ImageIcon(imagen);
+                view.getLblfoto().setIcon(icono);
+                view.getLblfoto().updateUI();
+            } catch (IOException ex) {
+                Logger.getLogger(ControlPersona.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }
