@@ -1,9 +1,7 @@
 package Controlador;
 
-import Modelo.ModeloPersona;
-import Vista.VistaPersonas;
-import Vista.VistaPrincipal;
-import Vista.VistaPuntoVenta;
+import Modelo.*;
+import Vista.*;
 
 public class ControladorMenuPrincipal {
     
@@ -19,6 +17,7 @@ public class ControladorMenuPrincipal {
         vistaprincipal.getMnucrudpersona().addActionListener(l -> CrudPersona());
         vistaprincipal.getBtnpersona().addActionListener(l -> CrudPersona());
         vistaprincipal.getBtnpuntoventa().addActionListener(l -> PuntoVenta());
+        vistaprincipal.getBtnproducto().addActionListener(l -> CrudProducto());
         vistaprincipal.getBtnpersona().setToolTipText("Carga la vista de personas");
         vistaprincipal.getBtnpuntoventa().setToolTipText("Carga la vista del punto de venta");
     }
@@ -32,11 +31,18 @@ public class ControladorMenuPrincipal {
         cp.IniciaControl();
     }
     
+    private void CrudProducto() {
+        VistaProductos vps = new VistaProductos();
+        ModeloProducto mps = new ModeloProducto();
+        vistaprincipal.getDktprincipal().add(vps);
+        ControladorProducto cps = new ControladorProducto(mps, vps);
+        cps.IniciaControl();
+    }
+    
     private void PuntoVenta() {
         VistaPuntoVenta vpv = new VistaPuntoVenta();
         vistaprincipal.getDktprincipal().add(vpv);
         ControladorPuntoVenta cpv = new ControladorPuntoVenta(vpv);
-        cpv.IniciaControl();
-        
+        cpv.IniciaControl();  
     }
 }
