@@ -319,7 +319,7 @@ public class ControlPersona {
         CargaPersonas();
     }
     
-        private void examinaFoto(){
+    private void examinaFoto(){
         jfc = new JFileChooser();
         jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int estado = jfc.showOpenDialog(view);
