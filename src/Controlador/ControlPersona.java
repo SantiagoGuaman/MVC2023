@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -19,6 +21,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 public class ControlPersona {
 
@@ -39,9 +47,12 @@ public class ControlPersona {
         view.getBtnCreate().addActionListener(l -> abrirDialogo(1));
         view.getBtnEdit().addActionListener(l -> abrirDialogo(2));
         view.getBtnEliminar().addActionListener(l -> abrirDialogo(3));
+        view.getBtnPrint().addActionListener(l -> abrirDialogo(4));
         view.getBtnaceptar().addActionListener(l -> crearEditarEliminarPersona());
+        view.getBtngenerate().addActionListener(l -> ImprimePersonas());
         view.getBtncancelar().addActionListener(l -> view.getDlgcrud().dispose());
         view.getBtncargarimagen().addActionListener(l -> examinaFoto());
+        view.getSlisueldomax().addChangeListener(l -> sliderStateChanged());
         view.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -55,6 +66,7 @@ public class ControlPersona {
                 MousePress(me);
             }
         });
+        
         
         //Validaciones 
         view.getTxtid().addKeyListener(new KeyAdapter() {
@@ -164,6 +176,7 @@ public class ControlPersona {
     
     private void abrirDialogo(int ce) {
         String title = null;
+        boolean is = false;
         if (ce == 1) {
             title = "CREAR NUEVA PERSONA";
             view.getDlgcrud().setName("crear");
@@ -186,15 +199,55 @@ public class ControlPersona {
                     title = "ELIMINAR PERSONA";
                     view.getDlgcrud().setName("eliminar");
                     view.getTxtid().setEnabled(false);
+                } else if (ce == 4) {
+                    is = true;
+                    title = "GENERAR REPORTE";
+                    view.getDjgreportes().setName("reporte");
                 }
             }
         }
-        view.getDlgcrud().setLocationRelativeTo(view);
-        view.getDlgcrud().setSize(600, 400);
-        view.getDlgcrud().setTitle(title);
-        view.getDlgcrud().setVisible(true);
+        if (is) {
+            view.getDjgreportes().setLocationRelativeTo(view);
+            view.getDjgreportes().setSize(600, 400);
+            view.getDjgreportes().setTitle(title);
+            view.getDjgreportes().setVisible(true);
+        } else {
+            view.getDlgcrud().setLocationRelativeTo(view);
+            view.getDlgcrud().setSize(600, 400);
+            view.getDlgcrud().setTitle(title);
+            view.getDlgcrud().setVisible(true);
+        }
     }
 
+    private Map<String, Object> Parametros() {
+        Map<String, Object> datos = new HashMap<>();
+        double min = view.getSlisueldomin().getValue();
+        double max = view.getSlisueldomax().getValue();
+        String titulo = view.getTxtituloreporte().getText();
+        datos.put("LimiteAlto", max);
+        datos.put("LimiteBajo", min);
+        datos.put("Titulo", titulo);
+        return datos;
+    }
+    
+    private void sliderStateChanged() {
+        view.getLblminsueldo().setText("$ " + view.getSlisueldomin().getValue());
+        view.getLblmaxsueldo().setText("$ " + view.getSlisueldomax().getValue());
+    }
+    
+    private void ImprimePersonas() {
+        ConectPG con = new ConectPG();
+        try {
+            JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/Vista/Reportes/ReporteMVC.jasper"));
+            Map<String, Object> parametros = Parametros();
+            JasperPrint jp = JasperFillManager.fillReport(jr, parametros, con.getCon());
+            JasperViewer jv = new JasperViewer(jp, false);
+            jv.setVisible(true);
+        } catch (JRException ex) {
+            Logger.getLogger(ControlPersona.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     //Crear y Editar persona
     private void crearEditarEliminarPersona() {
         if (view.getDlgcrud().getName().equals("crear")) {

@@ -48,11 +48,11 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }
 
     public JButton getBtnlistarpersonas() {
-        return btnlistarpersonas;
+        return btnreporteclientes;
     }
 
     public void setBtnlistarpersonas(JButton btnlistarpersonas) {
-        this.btnlistarpersonas = btnlistarpersonas;
+        this.btnreporteclientes = btnlistarpersonas;
     }
 
     public JButton getBtnpersona() {
@@ -127,6 +127,14 @@ public class VistaPrincipal extends javax.swing.JFrame {
         this.btnpuntoventa = btnpuntoventa;
     }
 
+    public JButton getBtnreporteclientes() {
+        return btnreporteclientes;
+    }
+
+    public void setBtnreporteclientes(JButton btnreporteclientes) {
+        this.btnreporteclientes = btnreporteclientes;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -136,7 +144,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         btnpersona = new javax.swing.JButton();
-        btnlistarpersonas = new javax.swing.JButton();
+        btnreporteclientes = new javax.swing.JButton();
         btnproducto = new javax.swing.JButton();
         btnpuntoventa = new javax.swing.JButton();
         dktprincipal = new javax.swing.JDesktopPane();
@@ -174,7 +182,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
         btnpersona.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/icons/client.png"))); // NOI18N
 
-        btnlistarpersonas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/icons/list.png"))); // NOI18N
+        btnreporteclientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/icons/list.png"))); // NOI18N
 
         btnproducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/icons/product.png"))); // NOI18N
 
@@ -188,7 +196,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btnpersona)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnlistarpersonas)
+                .addComponent(btnreporteclientes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnproducto)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -201,7 +209,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnlistarpersonas))
+                        .addComponent(btnreporteclientes))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,10 +290,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnlistarpersonas;
     private javax.swing.JButton btnpersona;
     private javax.swing.JButton btnproducto;
     private javax.swing.JButton btnpuntoventa;
+    private javax.swing.JButton btnreporteclientes;
     private javax.swing.JDesktopPane dktprincipal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
