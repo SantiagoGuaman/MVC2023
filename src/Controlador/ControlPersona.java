@@ -22,6 +22,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRSubreport;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -43,6 +44,7 @@ public class ControlPersona {
 
     //Método de acción con botones
     public void IniciaControl() {
+        CargaPersonas();
         view.getBtnUpdate().addActionListener(l -> CargaPersonas());
         view.getBtnCreate().addActionListener(l -> abrirDialogo(1));
         view.getBtnEdit().addActionListener(l -> abrirDialogo(2));
@@ -53,6 +55,7 @@ public class ControlPersona {
         view.getBtncancelar().addActionListener(l -> view.getDlgcrud().dispose());
         view.getBtncargarimagen().addActionListener(l -> examinaFoto());
         view.getSlisueldomax().addChangeListener(l -> sliderStateChanged());
+        view.getSlisueldomin().addChangeListener(l -> sliderStateChanged());
         view.getTxtBuscar().addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -116,6 +119,12 @@ public class ControlPersona {
             e.consume();
         }
     }
+
+   
+    private void sliderStateChanged() {
+        view.getLblminsueldo().setText("$ " + view.getSlisueldomin().getValue());
+        view.getLblmaxsueldo().setText("$ " + view.getSlisueldomax().getValue());
+    }    
 
     public void MousePress(MouseEvent me) {
         try { 
@@ -224,15 +233,19 @@ public class ControlPersona {
         double min = view.getSlisueldomin().getValue();
         double max = view.getSlisueldomax().getValue();
         String titulo = view.getTxtituloreporte().getText();
+        String autor = view.getTxtautor().getText().trim();;
+        int orderby = view.getCborder().getSelectedIndex() + 1;
+        if (autor.isEmpty()) {
+            autor = "Autor anónimo";
+        } else {
+            autor = "Autor: " + autor;
+        }
         datos.put("LimiteAlto", max);
         datos.put("LimiteBajo", min);
         datos.put("Titulo", titulo);
+        datos.put("Autor", autor);
+        datos.put("Campo", orderby);
         return datos;
-    }
-    
-    private void sliderStateChanged() {
-        view.getLblminsueldo().setText("$ " + view.getSlisueldomin().getValue());
-        view.getLblmaxsueldo().setText("$ " + view.getSlisueldomax().getValue());
     }
     
     private void ImprimePersonas() {
@@ -240,8 +253,9 @@ public class ControlPersona {
         try {
             JasperReport jr = (JasperReport) JRLoader.loadObject(getClass().getResource("/Vista/Reportes/ReporteMVC.jasper"));
             Map<String, Object> parametros = Parametros();
-            JasperPrint jp = JasperFillManager.fillReport(jr, parametros, con.getCon());
+            JasperPrint jp = JasperFillManager.fillReport(jr,  parametros, con.getCon());
             JasperViewer jv = new JasperViewer(jp, false);
+            
             jv.setVisible(true);
         } catch (JRException ex) {
             Logger.getLogger(ControlPersona.class.getName()).log(Level.SEVERE, null, ex);
